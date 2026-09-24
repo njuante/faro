@@ -112,3 +112,11 @@ default = 26
 
 # ------------------------------------------------------------------ plugins
 # [plugins.proxmox]          # power buttons for guests (needs api_token on the host)
+
+# [plugins.ai]               # ask about your homelab; a local model with Ollama (docs/assistant.md)
+# url = "http://192.168.1.30:11434"
+# model = "qwen3:4b-instruct"
+# guide = '''
+# Anything the assistant should know that faro can't see: what each machine is for,
+# where to request movies, who to call when the internet is down...
+# '''

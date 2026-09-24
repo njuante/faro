@@ -42,6 +42,7 @@ CONFIG = {
         {'host': 'pi', 'serial': 'SD-01', 'label': 'SD card', 'role': 'Raspberry Pi OS'},
     ],
     'guests': {'pve1:106': 'Test VM for Kubernetes', 'pve1:107': 'Windows 11 for games'},
+    'plugins': {'ai': {'demo': True}},
 }
 
 GUESTS = [  # vmid, kind, name, cpus, maxmem GiB, status

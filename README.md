@@ -49,6 +49,10 @@ and grew into something anyone can deploy.
 - **Detects what each host has.** A Raspberry Pi shows its Docker containers, a
   Proxmox node its guests, storages and backups, a NAS its ZFS pools and SMART data.
   There's nothing to switch on.
+- **A local AI assistant** (optional). Ask "what is using the CPU?" or "when was
+  the last backup?" and a model running on your own hardware answers from the live data.
+  It can call read-only tools that faro and its plugins provide
+  ([docs/assistant.md](docs/assistant.md)).
 - **Built for a phone.** It installs as an app (PWA), works in light and dark
   mode, and follows the time of day.
 
@@ -176,7 +180,6 @@ agent on 3.8–3.10 and a Docker build with a smoke test.
 ## Roadmap
 
 - [ ] Edit services from the UI (it writes `faro.toml` for you)
-- [ ] Local AI assistant plugin (Ollama) that can answer "is everything OK?" using the live data
 - [ ] Jellyfin / Plex "now playing" card
 - [ ] Push mode for hosts behind NAT (the agent connects out over HTTPS)
 - [ ] Prometheus `/metrics` endpoint
