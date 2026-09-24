@@ -1,0 +1,15 @@
+.rule { display: flex; align-items: center; gap: 12px; padding: 10px 2px; border-bottom: 1px solid var(--line); }
+.rule:last-of-type { border-bottom: 0; }
+.rule .tx { flex: 1; min-width: 0; }
+.rule b { display: block; font-size: 14px; font-weight: 600; }
+.rule span { display: block; font-size: 12px; color: var(--on-wall-2); }
+.card .switch { background: var(--soft-2); }
+.card .switch.on { background: var(--good); }
+.auto-log { display: flex; flex-direction: column; }
+.auto-log div { display: flex; gap: 10px; align-items: baseline; padding: 6px 2px; font-size: 12.5px; border-top: 1px solid var(--line); min-width: 0; }
+.auto-log time { font: 11px var(--font-num); color: var(--on-wall-2); flex: none; }
+.auto-log span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--on-wall-2); }
+.auto-log .bad span { color: var(--crit); }
+.auto-foot { display: flex; }
+.auto-foot button { font: 600 12.5px var(--font); color: var(--on-wall); background: transparent; border: 0; box-shadow: 0 0 0 1px var(--line-2);
+  border-radius: 10px; padding: 7px 12px; cursor: pointer; }

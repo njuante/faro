@@ -54,8 +54,9 @@ and grew into something anyone can deploy.
   It can call read-only tools that faro and its plugins provide
   ([docs/assistant.md](docs/assistant.md)).
 - **Plugins for what you run**: power buttons for Proxmox guests, *now
-  playing* and *recently added* from Jellyfin, Plex and Navidrome, and a speed
-  test between your phone and your server
+  playing* and *recently added* from Jellyfin, Plex and Navidrome, a speed test
+  between your phone and your server, and automations (restart what stops
+  answering, shut down idle VMs, a daily report)
   ([docs/plugins.md](docs/plugins.md#built-in-plugins)).
 - **Built for a phone.** It installs as an app (PWA), works in light and dark
   mode, and follows the time of day.

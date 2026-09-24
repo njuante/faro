@@ -22,6 +22,7 @@ never have to be in a public repository.
 | `ai` | Ask about the homelab; a local model answers | [assistant.md](assistant.md) |
 | `media` | Now playing and recently added: Jellyfin, Plex, Navidrome | below |
 | `speedtest` | Speed between the device in your hand and the server | below |
+| `automations` | Restart what stops answering, shut down idle VMs, a daily report | below |
 
 ### media
 
@@ -53,6 +54,30 @@ match. That tells you what your phone really gets from your server at home or
 over your VPN, which a public speed test can't. Results are labelled with the
 network they came from, and the assistant's `speed` tool reads them (*"is the
 VPN slow?"*).
+
+### automations
+
+```toml
+[plugins.automations.restart_down]      # restart the container of a service that stopped answering
+after_minutes = 2
+exclude = ["proxy"]                     # service ids never to restart
+
+[plugins.automations.idle_shutdown]     # shut down VMs nobody is using
+guests = ["pve1:107"]
+idle_minutes = 25
+below_cores = 0.08                      # idle = using less than 8 % of one core
+
+[plugins.automations.report]            # a daily summary as a notification
+at = "22:00"
+```
+
+A rule runs only if its table is there, and a switch on its card turns it off
+without touching the config. `restart_down` acts once per incident: if the
+restart doesn't fix it, faro leaves it alone and you get the alert. That way it
+can't get stuck in a restart loop. `idle_shutdown` measures real CPU use from
+the host's cgroups and warns 5 minutes before shutting down. Both need the
+`proxmox` plugin with an `api_token` on the host. The `report` is written by the
+assistant when the `ai` plugin is set up. Without it, you get the plain figures.
 
 ## What a plugin can do
 

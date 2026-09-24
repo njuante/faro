@@ -122,6 +122,15 @@ default = 26
 # networks = [{ name = "home", cidr = "192.168.1.0/24" }, { name = "VPN", cidr = "10.8.0.0/24" }]
 # max_mb = 256
 
+# [plugins.automations.restart_down]    # restart the container of a service that stopped answering
+# after_minutes = 2
+# exclude = ["proxy"]
+# [plugins.automations.idle_shutdown]   # shut down VMs nobody is using
+# guests = ["pve1:107"]
+# idle_minutes = 25
+# [plugins.automations.report]          # a daily summary as a notification
+# at = "22:00"
+
 # [plugins.ai]               # ask about your homelab; a local model with Ollama (docs/assistant.md)
 # url = "http://192.168.1.30:11434"
 # model = "qwen3:4b-instruct"

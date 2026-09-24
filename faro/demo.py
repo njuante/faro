@@ -43,7 +43,8 @@ CONFIG = {
     ],
     'guests': {'pve1:106': 'Test VM for Kubernetes', 'pve1:107': 'Windows 11 for games'},
     'plugins': {'ai': {'demo': True}, 'media': {'demo': True},
-                'speedtest': {'max_mb': 64, 'networks': [{'name': 'this computer', 'cidr': '127.0.0.0/8'}]}},
+                'speedtest': {'max_mb': 64, 'networks': [{'name': 'this computer', 'cidr': '127.0.0.0/8'}]},
+                'automations': {'restart_down': {}, 'idle_shutdown': {'guests': ['pve1:107']}, 'report': {}}},
 }
 
 GUESTS = [  # vmid, kind, name, cpus, maxmem GiB, status
@@ -189,4 +190,12 @@ def start(app):
                 (0.4, 'info', 'Test notification', 'If you can read this, notifications work.')):
             app.alerts.log.append({'ts': now - ago_h * 3600, 'level': level, 'title': title, 'body': body,
                                    'priority': 3, 'url': None, 'key': None})
+    auto = app.plugin('automations')
+    if auto:
+        auto.log.clear()
+        for ago_h, rule, text in ((50, 'report', '8 of 8 services answering · 2 of 2 hosts online · 0 alerts today'),
+                                  (30, 'restart_down', 'Immich was not answering: restarting its container · Rebooting immich.'),
+                                  (26, 'report', 'A quiet day: every service answered and last night\'s backups finished.'),
+                                  (3, 'idle_shutdown', 'win11 shut down · Shutting down win11.')):
+            auto.log.append({'ts': now - ago_h * 3600, 'rule': rule, 'text': text, 'ok': True})
     threading.Thread(target=loop, daemon=True, name='demo').start()
