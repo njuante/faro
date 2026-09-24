@@ -1,0 +1,8 @@
+__pycache__/
+*.pyc
+.venv/
+venv/
+.ruff_cache/
+# never commit a real config: it holds hosts, tokens and the password hash
+/faro.toml
+/config/

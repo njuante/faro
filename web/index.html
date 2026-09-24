@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>faro</title>
+<meta name="description" content="Your servers at a glance: status, temperatures, disks and every service.">
+<meta id="theme-color" name="theme-color" content="#0b0f20">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="icon" href="/img/icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/img/icon-180.png">
+<link rel="stylesheet" href="/css/faro.css">
+</head>
+<body data-tab="home">
+<div class="wall" aria-hidden="true"><i></i><i></i><i></i></div>
+
+<div id="boot" class="boot"><span class="beam"></span><p data-t="loading">Connecting…</p></div>
+
+<form id="login" class="login glass" hidden>
+  <img src="/img/icon.svg" alt="" width="56" height="56">
+  <h1 id="login-title">faro</h1>
+  <label><span data-t="password">Password</span><input id="login-pw" type="password" autocomplete="current-password" required></label>
+  <button class="btn primary" type="submit" data-t="login">Sign in</button>
+  <p id="login-err" class="err" role="alert"></p>
+</form>
+
+<header class="top" id="top" hidden>
+  <button class="back glass" id="back" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m14.5 5-7 7 7 7"/></svg><span data-t="back">Home</span></button>
+  <h1 id="title"></h1>
+  <div class="right">
+    <span class="live" id="live"><i></i><span></span></span>
+    <button class="bell" id="bell" type="button" aria-label="Alerts"></button>
+    <span id="clock" class="num"></span>
+  </div>
+</header>
+<div class="summary" id="summary" hidden></div>
+
+<main id="main" hidden>
+  <section class="pane" id="p-home">
+    <div class="home">
+      <section class="widget glass">
+        <div>
+          <div class="w-time" id="w-time">--:--</div>
+          <div class="w-date" id="w-date"></div>
+          <div id="w-status"></div>
+        </div>
+        <div class="w-rings" id="w-rings"></div>
+        <button class="bell" id="bell2" type="button" aria-label="Alerts"></button>
+      </section>
+      <div class="apps" id="apps"></div>
+      <div class="hostcards" id="hostcards"></div>
+      <div class="cards" id="cards"></div>
+    </div>
+  </section>
+
+  <section class="pane" id="p-system">
+    <div class="phead"><div class="seg" id="range"><button data-r="live" class="on" data-t="range_live">15 min</button><button data-r="day" data-t="range_day">24 h</button></div></div>
+    <div class="hosts" id="hosts"></div>
+  </section>
+
+  <section class="pane" id="p-services">
+    <div class="phead"><span id="svc-note"></span></div>
+    <div class="tbl"><table id="svc"></table></div>
+    <h2 class="sub-h" id="others-h" data-t="other_guests">Other VMs and containers</h2>
+    <div class="tiles" id="tiles"></div>
+  </section>
+
+  <section class="pane" id="p-disks">
+    <div class="disks" id="disks"></div>
+    <div class="bottom">
+      <div><h3 data-t="storage">Storage</h3><table id="storage"></table></div>
+      <div id="backups-box"><h3 data-t="backups">Backups</h3><table id="backups"></table></div>
+    </div>
+  </section>
+</main>
+
+<nav class="dock glass" id="dock" hidden>
+  <button data-tab="home" data-i="casa"><span class="icw"><span class="ico"></span></span><em data-t="tab_home">Home</em></button>
+  <button data-tab="system" data-i="chip"><span class="icw"><span class="ico"></span></span><em data-t="tab_system">System</em></button>
+  <button data-tab="services" data-i="rejilla"><span class="icw"><span class="ico"></span><i class="badge" id="dock-svc" hidden>!</i></span><em data-t="tab_services">Services</em></button>
+  <button data-tab="disks" data-i="disco"><span class="icw"><span class="ico"></span><i class="badge" id="dock-disk" hidden>!</i></span><em data-t="tab_disks">Disks</em></button>
+  <button data-sheet="settings" data-i="ajustes"><span class="icw"><span class="ico"></span></span><em data-t="tab_settings">Settings</em></button>
+</nav>
+
+<div class="veil" id="veil" hidden></div>
+<div class="sheet" id="sheet" role="dialog" aria-modal="true" hidden><div class="handle"></div><div id="sheet-body"></div></div>
+<div class="toast" id="toast" role="status"></div>
+
+<script type="module" src="/js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,15 @@
+# docker compose up -d
+# First time:  docker compose run --rm faro init        (creates the config and asks for a password)
+# Add a host:  docker compose run --rm faro add-host root@192.168.1.20 --name nas
+services:
+  faro:
+    build: .
+    # image: ghcr.io/njuante/faro:latest
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./config:/etc/faro
+      - faro-data:/var/lib/faro
+volumes:
+  faro-data:

@@ -1,0 +1,114 @@
+# faro configuration. Every change is picked up automatically in a few seconds.
+#
+# Secrets do not have to live in this file: any value can be "env:VARIABLE"
+# (read from the environment) or "file:/path/to/file" (read from a file).
+
+title = "Homelab"
+language = "auto"            # auto (the browser's), en or es
+
+[server]
+bind = "0.0.0.0"
+port = 8080
+data_dir = "/var/lib/faro"   # history, sessions, the SSH key for the agents
+public_url = ""              # e.g. "https://faro.example.com": used for links in notifications
+# trusted_proxies = ["127.0.0.1/32"]   # reverse proxies allowed to set X-Forwarded-For
+
+[auth]
+mode = "password"            # "password", or "none" if a proxy (Authelia, Authentik...) already protects it
+password_hash = ""           # set it with: faro set-password
+
+# ------------------------------------------------------------------ hosts
+# Machines to monitor. Add one with:  faro add-host root@192.168.1.20 --name nas
+# It installs the agent over SSH, restricts the key to the agent, and appends a
+# [[hosts]] block here. The agent needs Python 3 on the host, nothing else.
+
+# >>> hosts
+[[hosts]]
+id = "pve1"
+name = "pve1"
+description = "Proxmox · always on"
+address = "192.168.1.10"
+# user = "root"              # SMART and Proxmox details need root
+# port = 22
+# nic = "vmbr0"              # interface to chart (default: the one with the default route)
+# transport = "local"        # for the machine running faro: no SSH needed
+# api_token = "env:FARO_PVE1_TOKEN"   # enables power buttons with [plugins.proxmox], see docs/proxmox.md
+# <<< hosts
+
+# ------------------------------------------------------------------ services
+# Apps on the home screen. Each one is checked every `checks.interval` seconds.
+#   check = "http" (default when there is a url), "tcp", "dns" or "none"
+#   target = what to check if it is not the url: "10.0.0.5:8096" for tcp, "10.0.0.53" for dns
+#   host + guest link the service to a Proxmox guest (CPU, RAM and disk in the list)
+#   icon: play, musica, nube, carpeta, llave, escudo, grafica, base, capas, servidor,
+#         candado, casa, sync, descarga, chip, disco... or an image URL / path under web/img/
+
+# >>> services
+[[services]]
+name = "Proxmox"
+description = "Virtualization"
+url = "https://192.168.1.10:8006"
+icon = "servidor"
+color = "#e57000"
+host = "pve1"
+# <<< services
+
+# [[services]]
+# name = "Jellyfin"
+# description = "Movies and shows"
+# url = "https://jellyfin.example.com"
+# target = "http://192.168.1.21:8096/health"   # check the backend directly, not through the proxy
+# icon = "play"
+# color = "#aa5cc3"
+# host = "pve1"
+# guest = 101
+
+# [[services]]
+# name = "AdGuard DNS"
+# check = "dns"
+# target = "192.168.1.53"
+# icon = "escudo"
+
+[checks]
+interval = 10                # seconds
+timeout = 4
+verify_tls = false           # homelabs are full of self-signed certificates
+# ca_file = "/etc/faro/my-ca.crt"   # or verify them against your own CA
+
+# ------------------------------------------------------------------ alerts
+[alerts]
+service_down_after = 30      # seconds down before alerting
+host_offline_after = 90
+disk_temp_hdd = 60
+disk_temp_ssd = 70
+disk_temp_nvme = 80
+disk_full_percent = 90
+
+# [notify.ntfy]
+# url = "https://ntfy.sh"
+# topic = "my-homelab-8f3k2"
+# token = "env:FARO_NTFY_TOKEN"
+
+# [notify.webhook]
+# url = "file:/etc/faro/discord-webhook"
+# format = "discord"         # json, discord or slack
+
+# ------------------------------------------------------------------ disks
+# Optional names for disks (by serial number, shown in the Disks tab).
+# [[disks]]
+# host = "pve1"
+# serial = "WD-WX12A"
+# label = "Data A"
+# role = "ZFS mirror · media"
+
+# Descriptions for Proxmox guests without a service ("host:vmid").
+[guests]
+# "pve1:106" = "Kubernetes lab"
+
+# How old a Proxmox backup may get before it shows as late, in hours, per backup storage.
+[backup_max_age]
+default = 26
+# "weekly-usb" = 192
+
+# ------------------------------------------------------------------ plugins
+# [plugins.proxmox]          # power buttons for guests (needs api_token on the host)

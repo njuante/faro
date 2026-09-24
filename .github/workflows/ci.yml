@@ -1,0 +1,50 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/ruff-action@v3
+
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python: ["3.11", "3.12", "3.13"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+      - name: Unit tests (standard library only, no pip install)
+        run: python -W error::ResourceWarning -m unittest discover -s tests -t . -v
+
+  agent-compat:
+    # the agent runs on whatever Python the monitored host has
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python: ["3.8", "3.9", "3.10"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+      - run: python agent/faro-agent.py --once | python -c "import json,sys; d=json.load(sys.stdin); assert d['cpu'] and d['mem']"
+
+  docker:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: docker build -t faro .
+      - name: Demo mode answers
+        run: |
+          docker run -d --name faro -p 8080:8080 faro demo --bind 0.0.0.0
+          for i in $(seq 1 20); do curl -fs localhost:8080/api/me && exit 0; sleep 1; done
+          docker logs faro; exit 1

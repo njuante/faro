@@ -1,0 +1,31 @@
+[Unit]
+Description=faro homelab dashboard
+Documentation=https://github.com/njuante/faro
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+User=faro
+Group=faro
+Environment=PYTHONPATH=/opt/faro FARO_CONFIG=/etc/faro/faro.toml PYTHONUNBUFFERED=1
+ExecStart=/usr/bin/python3 -m faro serve
+Restart=always
+RestartSec=3
+
+# hardening: faro only needs to read its code, write its data and open SSH connections
+NoNewPrivileges=yes
+ProtectSystem=strict
+ReadWritePaths=/var/lib/faro /etc/faro
+ProtectHome=yes
+PrivateTmp=yes
+PrivateDevices=yes
+ProtectKernelTunables=yes
+ProtectKernelModules=yes
+ProtectControlGroups=yes
+RestrictSUIDSGID=yes
+LockPersonality=yes
+RestrictNamespaces=yes
+SystemCallArchitectures=native
+
+[Install]
+WantedBy=multi-user.target

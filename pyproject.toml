@@ -1,0 +1,29 @@
+[project]
+name = "faro"
+version = "0.1.0"
+description = "A self-hosted dashboard for your homelab servers: no dependencies, no open ports on the hosts."
+readme = "README.md"
+license = "MIT"
+requires-python = ">=3.11"
+dependencies = []
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "Operating System :: POSIX :: Linux",
+  "Topic :: System :: Monitoring",
+]
+
+[project.scripts]
+faro = "faro.cli:main"
+
+[tool.ruff]
+line-length = 120
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "B", "UP", "S"]
+ignore = ["S603", "S607", "S310", "S311", "S110", "B023", "E731"]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/*" = ["S101", "S105", "S106"]
+"agent/*" = ["UP"]    # the agent stays compatible with Python 3.7
+"faro/demo.py" = ["E501"]   # data tables read better on one line

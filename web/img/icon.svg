@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#2d4fc0"/>
+      <stop offset=".55" stop-color="#3a2a8f"/>
+      <stop offset="1" stop-color="#0e5f73"/>
+    </linearGradient>
+    <linearGradient id="beam" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#ffe7a3" stop-opacity=".95"/>
+      <stop offset="1" stop-color="#ffe7a3" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="beam2" x1="1" y1="0" x2="0" y2="0">
+      <stop offset="0" stop-color="#ffe7a3" stop-opacity=".95"/>
+      <stop offset="1" stop-color="#ffe7a3" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" rx="116" fill="url(#bg)"/>
+  <!-- beams -->
+  <path d="M268 158 L470 96 L470 236 Z" fill="url(#beam)" opacity=".85"/>
+  <path d="M244 158 L42 96 L42 236 Z" fill="url(#beam2)" opacity=".55"/>
+  <!-- lamp room -->
+  <rect x="222" y="132" width="68" height="52" rx="10" fill="#ffe7a3"/>
+  <path d="M206 132 L256 96 L306 132 Z" fill="#fff"/>
+  <rect x="200" y="182" width="112" height="16" rx="6" fill="#fff"/>
+  <!-- tower with stripes -->
+  <path d="M214 198 H298 L322 420 H190 Z" fill="#fff"/>
+  <path d="M209 246 H303 L308 292 H204 Z" fill="#e5484d"/>
+  <path d="M199 338 H313 L318 384 H194 Z" fill="#e5484d"/>
+  <rect x="160" y="416" width="192" height="22" rx="11" fill="#fff" opacity=".9"/>
+</svg>
