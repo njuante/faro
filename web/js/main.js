@@ -1,8 +1,8 @@
 // faro web app: boot, login, tabs, live data and the pieces shared by every view.
 import { charts } from './chart.js';
 import { $, $$, esc, f0, gib, hhmm, rate, store } from './fmt.js';
-import { setLanguage, t } from './i18n.js';
-import { icon } from './icons.js';
+import { getLanguage, setLanguage, t } from './i18n.js';
+import { ICONS, icon } from './icons.js';
 import * as home from './views/home.js';
 import * as system from './views/system.js';
 import * as services from './views/services.js';
@@ -210,6 +210,9 @@ function render() {
   renderSummary();
   VIEWS[app.tab].render(app);
   sheet.refresh(app);
+  for (const fn of renderHooks) {
+    try { fn(app); } catch (e) { console.error(e); }
+  }
 }
 
 function merge(m) {
@@ -270,6 +273,48 @@ function tick() {
 }
 setInterval(tick, 1000);
 
+/* ------------------------------------------------------------------ plugins */
+
+// What a plugin's web module gets: `export function init(ctx) { ... }`
+const renderHooks = [];
+function pluginContext(name) {
+  return {
+    name,
+    app,                                        // app.S is the live state
+    api: app.api,                               // api(path) GETs, api(path, body) POSTs
+    lang: getLanguage(),
+    t,
+    esc,
+    icon,
+    addIcon: (key, svgPaths) => { ICONS[key] = svgPaths; },
+    toast,
+    store: { get: k => store.get(name + '-' + k), set: (k, v) => store.set(name + '-' + k, v) },
+    // a card on the home screen, below the servers; returns the element to fill
+    addCard(id) {
+      const el = document.createElement('section');
+      el.className = 'card glass plugin-card';
+      el.id = 'card-' + id;
+      $('#cards').append(el);
+      return el;
+    },
+    onRender(fn) { renderHooks.push(fn); },     // called about once a second with fresh data
+    openSheet: el => sheet.open('element', el), // show an element in the bottom sheet
+    closeSheet: () => sheet.close(),
+  };
+}
+
+async function loadPlugins() {
+  for (const p of app.S.plugins || []) {
+    if (!p.module) continue;
+    try {
+      const mod = await import(p.module);
+      await mod.init?.(pluginContext(p.name));
+    } catch (e) {
+      console.error(`plugin ${p.name}:`, e);
+    }
+  }
+}
+
 /* ------------------------------------------------------------------ boot and login */
 
 function showLogin(title) {
@@ -308,6 +353,7 @@ async function start() {
   for (const v of Object.values(VIEWS)) v.build?.(app);
   showTab(location.hash.slice(1) || store.get('tab') || 'home', false);
   connect();
+  loadPlugins();
 }
 
 async function boot() {

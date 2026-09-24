@@ -51,3 +51,56 @@ class Plugin(BasePlugin):
 secrets already resolved.
 
 A plugin that fails to load is logged and skipped, and the rest of faro keeps working.
+
+## Tools for the assistant
+
+`tools()` returns `Tool` objects the [assistant](../faro/plugins/ai/) can call
+when a question needs data that isn't in the live state:
+
+```python
+from faro.plugins import Tool
+
+def tools(self):
+    return [Tool('speed_history', 'Recent internet speed measurements.', self.history,
+                 step='Checking the speed tests…')]
+```
+
+`params` is a `{name: description}` dict. Every parameter reaches `fn` as a string.
+
+## Streaming routes
+
+A route handler that returns `None` has answered on its own. `req.sse()` starts a
+Server-Sent Events response and returns a function that sends one event:
+
+```python
+def chat(req):
+    send = req.sse()
+    for piece in generate(req.body['question']):
+        send({'t': piece})
+```
+
+## An interface of its own
+
+A plugin that is a package (`speedtest/__init__.py`) can ship web files in
+`speedtest/web/`. They're served at `/p/speedtest/…`. If the class sets
+`web = 'speedtest.js'`, the browser imports that ES module after login and calls
+its `init(ctx)`:
+
+```js
+export function init(ctx) {
+  const card = ctx.addCard('speedtest');          // an empty .card on the home screen
+  ctx.onRender(app => {                           // about once a second
+    card.innerHTML = `<header>${ctx.icon('red')}${ctx.t('Internet')}</header>…`;
+  });
+}
+```
+
+| `ctx.` | |
+|---|---|
+| `app.S` | the live state (hosts, services, config) |
+| `api(path)` / `api(path, body)` | GET / POST with the session and CSRF header |
+| `lang`, `t`, `esc`, `icon(name)`, `addIcon(name, svg)` | language, translation, HTML escaping, icons |
+| `addCard(id)` | adds a card to the home screen and returns it |
+| `onRender(fn)` | runs `fn(app)` on every update |
+| `openSheet(element)`, `closeSheet()` | the bottom sheet |
+| `toast(text, bad)`, `store.get/set` | a short message; per-browser settings |

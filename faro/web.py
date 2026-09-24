@@ -127,9 +127,18 @@ def make_handler(app):
                     return self.api(200, list(app.action_log)[::-1])
             handler = app.routes.get(('GET', path))
             if handler:
-                code, body = handler(self)
-                return self.api(code, body)
+                return self.plugin_response(handler)
             return self.api(404, {'error': 'not found'})
+
+        def plugin_response(self, handler):
+            try:
+                res = handler(self)
+            except Exception as e:
+                print(f'plugin route {self.path} failed: {type(e).__name__}: {e}', flush=True)
+                return self.api(500, {'error': type(e).__name__})
+            if res is not None:           # None: the handler already answered (e.g. a stream)
+                code, body = res
+                self.api(code, body)
 
         def post_api(self, path, body):
             if path == '/api/login':
@@ -155,9 +164,23 @@ def make_handler(app):
             handler = app.routes.get(('POST', path))
             if handler:
                 self.body = body
-                code, out = handler(self)
-                return self.api(code, out)
+                return self.plugin_response(handler)
             return self.api(404, {'error': 'not found'})
+
+        def sse(self):
+            """Starts a Server-Sent Events response; returns a function that sends one event."""
+            self.close_connection = True
+            self.send_response(200)
+            self.send_header('Content-Type', 'text/event-stream')
+            self.send_header('Cache-Control', 'no-store')
+            self.send_header('X-Accel-Buffering', 'no')
+            self.send_header('Connection', 'close')
+            self.end_headers()
+
+            def send(data):
+                self.wfile.write(f'data: {json.dumps(data, ensure_ascii=False)}\n\n'.encode())
+                self.wfile.flush()
+            return send
 
         def stream(self):
             self.send_response(200)
@@ -179,8 +202,15 @@ def make_handler(app):
         def static(self, path):
             if path == '/':
                 path = '/index.html'
-            f = os.path.normpath(os.path.join(WEB, path.lstrip('/')))
-            if not f.startswith(WEB + os.sep) or not os.path.isfile(f):
+            root = WEB
+            if path.startswith('/p/'):          # a plugin's own web files: /p/<name>/<file>
+                _, _, name, rest = (path.split('/', 3) + [''])[:4]
+                plugin = app.plugin(name)
+                if not plugin or not plugin.static_dir:
+                    return self.send(404, 'not found', 'text/plain')
+                root, path = plugin.static_dir, '/' + rest
+            f = os.path.normpath(os.path.join(root, path.lstrip('/')))
+            if not f.startswith(root + os.sep) or not os.path.isfile(f):
                 return self.send(404, 'not found', 'text/plain')
             with open(f, 'rb') as fh:
                 body = fh.read()

@@ -25,6 +25,7 @@ class Faro:
         self.plugins = plugins.load(self)
         self.actions = {a.id: a for p in self.plugins for a in p.actions()}
         self.routes = {k: v for p in self.plugins for k, v in p.routes().items()}
+        self.tools = {t.name: t for p in self.plugins for t in p.tools()}
         self.action_log = deque(maxlen=100)
         self.action_lock = threading.Lock()
 
@@ -53,6 +54,9 @@ class Faro:
         print(f'action: {action_id} {json.dumps(params)} by {who} -> {res.get("text")}', flush=True)
         return res
 
+    def plugin(self, name):
+        return next((p for p in self.plugins if p.name == name), None)
+
     def cards(self):
         out = []
         for p in self.plugins:
@@ -68,6 +72,8 @@ class Faro:
         if full:
             out['config'] = public_view(self.conf)
             out['actions'] = [a.describe() for a in self.actions.values()]
+            out['plugins'] = [{'name': p.name, 'module': f'/p/{p.name}/{p.web}' if p.web and p.static_dir else None}
+                              for p in self.plugins]
             out['version'] = self.version
             out['demo'] = self.demo
         return out

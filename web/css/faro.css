@@ -260,7 +260,7 @@ body[data-tab="home"] .pane#p-home { padding-top: calc(env(safe-area-inset-top) 
 .mini s { display: block; height: 100%; border-radius: 2px; background: var(--on-wall); transition: width .6s ease; }
 .mini.warn s { background: var(--warn); } .mini.crit s { background: var(--crit); }
 .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 14px; }
-.cards:empty { display: none; }
+.contents { display: contents; }
 .card { border-radius: var(--radius); padding: 14px 16px 15px; display: flex; flex-direction: column; gap: 10px; min-width: 0; }
 .card > header { display: flex; align-items: center; gap: 9px; padding-bottom: 9px; border-bottom: 1px solid var(--line);
   font: 500 11.5px var(--font-num); letter-spacing: .06em; text-transform: uppercase; }

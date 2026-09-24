@@ -136,7 +136,7 @@ async function loadCards(app) {
   clearTimeout(cardsTimer);
   let cards = [];
   try { cards = await app.api('/api/cards'); } catch (e) { /* keep the old ones */ }
-  $('#cards').innerHTML = cards.map(c => `
+  $('#srv-cards').innerHTML = cards.map(c => `
     <section class="card glass">
       <header>${icon(c.icon || 'rejilla')}${esc(c.title)}${c.extra ? `<span class="extra">${esc(c.extra)}</span>` : ''}</header>
       <div class="list">${(c.items || []).map(it => `

@@ -13,8 +13,9 @@ export function open(kind, id) {
   lastHtml = '';
   $('#veil').hidden = false;
   $('#sheet').hidden = false;
-  $('#sheet').classList.toggle('tall', kind === 'alerts');
-  paint();
+  $('#sheet').classList.toggle('tall', kind === 'alerts' || (kind === 'element' && id.dataset.tall != null));
+  if (kind === 'element') $('#sheet-body').replaceChildren(id);     // a plugin's own content
+  else paint();
   if (kind === 'alerts') loadAlerts();
   history.pushState({ sheet: kind }, '');
 }
