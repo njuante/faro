@@ -70,7 +70,8 @@ class BasePlugin:
         """Extra HTTP endpoints: {('GET', '/api/p/<name>/x'): handler(request) -> (status, dict)}.
 
         A handler that writes its own response (e.g. a stream) returns None.
-        POST handlers find the decoded JSON body in request.body.
+        POST handlers find the decoded JSON body in request.body, unless the handler
+        has `raw = True`: then it reads request.rfile itself (for uploads).
         """
         return {}
 

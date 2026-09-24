@@ -1,0 +1,14 @@
+.speed-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+.speed-fig { border-radius: 16px; box-shadow: 0 0 0 1px var(--line); padding: 9px 10px 10px; text-align: center; min-width: 0; }
+.speed-fig b { display: block; font: 500 23px var(--font-num); letter-spacing: -0.02em; line-height: 1.1; }
+.speed-fig b.measuring { color: var(--on-wall-2); }
+.speed-fig span { display: block; font: 500 9.5px var(--font-num); text-transform: uppercase; letter-spacing: .05em; color: var(--on-wall-2); margin-top: 3px; }
+.speed-fig small { display: block; font-size: 10px; color: var(--on-wall-2); }
+.speed-needle { height: 4px; border-radius: 2px; background: var(--soft-2); overflow: hidden; }
+.speed-needle i { display: block; height: 100%; width: 0; border-radius: 2px; background: var(--on-wall); transition: width .25s ease; }
+.speed-foot { display: flex; align-items: center; gap: 10px; font-size: 12px; color: var(--on-wall-2); }
+.speed-foot button { font: 650 13px var(--font); color: var(--wall); background: var(--on-wall); border: 0; border-radius: 10px;
+  padding: 8px 16px; cursor: pointer; flex: none; }
+.speed-foot button:disabled { opacity: .45; cursor: default; }
+.speed-hist { display: flex; gap: 6px; overflow-x: auto; scrollbar-width: none; }
+.speed-hist span { flex: none; font-size: 11px; color: var(--on-wall-2); background: var(--soft); border-radius: 999px; padding: 4px 9px; white-space: nowrap; }

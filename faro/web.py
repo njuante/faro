@@ -102,6 +102,9 @@ def make_handler(app):
                 return self.api(403, {'error': 'missing X-Faro header'})
             if path not in PUBLIC_API and not auth.valid(self.token()):
                 return self.api(401, {'error': 'login required'})
+            handler = app.routes.get(('POST', path))
+            if getattr(handler, 'raw', False):      # reads the body itself (e.g. an upload)
+                return self.plugin_response(handler)
             try:
                 body = self.read_json()
             except ValueError:

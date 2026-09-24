@@ -21,6 +21,7 @@ never have to be in a public repository.
 | `proxmox` | Start, shut down and reboot guests | [proxmox.md](proxmox.md) |
 | `ai` | Ask about the homelab; a local model answers | [assistant.md](assistant.md) |
 | `media` | Now playing and recently added: Jellyfin, Plex, Navidrome | below |
+| `speedtest` | Speed between the device in your hand and the server | below |
 
 ### media
 
@@ -37,6 +38,21 @@ Configure any of them. `url` is how faro reaches the server. `public_url`
 Posters go through faro and stay cached on disk for a week, so the tokens never
 reach the browser. The assistant gets a `now_playing` tool: *"why is the CPU
 busy?"* can be answered with *"Leo is watching a film that's being transcoded"*.
+
+### speedtest
+
+```toml
+[plugins.speedtest]
+networks = [{ name = "home", cidr = "192.168.1.0/24" }, { name = "VPN", cidr = "10.8.0.0/24" }]
+max_mb = 256          # cap per direction; lower it on a Raspberry Pi or a metered link
+```
+
+It measures from the browser: the best of six pings, six seconds of download
+(random bytes, so nothing on the way can compress them) and an upload sized to
+match. That tells you what your phone really gets from your server at home or
+over your VPN, which a public speed test can't. Results are labelled with the
+network they came from, and the assistant's `speed` tool reads them (*"is the
+VPN slow?"*).
 
 ## What a plugin can do
 

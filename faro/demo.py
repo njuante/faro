@@ -42,7 +42,8 @@ CONFIG = {
         {'host': 'pi', 'serial': 'SD-01', 'label': 'SD card', 'role': 'Raspberry Pi OS'},
     ],
     'guests': {'pve1:106': 'Test VM for Kubernetes', 'pve1:107': 'Windows 11 for games'},
-    'plugins': {'ai': {'demo': True}, 'media': {'demo': True}},
+    'plugins': {'ai': {'demo': True}, 'media': {'demo': True},
+                'speedtest': {'max_mb': 64, 'networks': [{'name': 'this computer', 'cidr': '127.0.0.0/8'}]}},
 }
 
 GUESTS = [  # vmid, kind, name, cpus, maxmem GiB, status
