@@ -53,6 +53,9 @@ and grew into something anyone can deploy.
   the last backup?" and a model running on your own hardware answers from the live data.
   It can call read-only tools that faro and its plugins provide
   ([docs/assistant.md](docs/assistant.md)).
+- **Plugins for what you run**: power buttons for Proxmox guests, and *now
+  playing* and *recently added* from Jellyfin, Plex and Navidrome
+  ([docs/plugins.md](docs/plugins.md#built-in-plugins)).
 - **Built for a phone.** It installs as an app (PWA), works in light and dark
   mode, and follows the time of day.
 
@@ -180,7 +183,6 @@ agent on 3.8–3.10 and a Docker build with a smoke test.
 ## Roadmap
 
 - [ ] Edit services from the UI (it writes `faro.toml` for you)
-- [ ] Jellyfin / Plex "now playing" card
 - [ ] Push mode for hosts behind NAT (the agent connects out over HTTPS)
 - [ ] Prometheus `/metrics` endpoint
 

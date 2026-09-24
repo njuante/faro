@@ -14,6 +14,30 @@ Built-in plugins are looked up in `faro/plugins/`, your own in `server.plugin_di
 (default `/etc/faro/plugins`). Private integrations can stay on your server and
 never have to be in a public repository.
 
+## Built-in plugins
+
+| Plugin | What it adds | Docs |
+|---|---|---|
+| `proxmox` | Start, shut down and reboot guests | [proxmox.md](proxmox.md) |
+| `ai` | Ask about the homelab; a local model answers | [assistant.md](assistant.md) |
+| `media` | Now playing and recently added: Jellyfin, Plex, Navidrome | below |
+
+### media
+
+```toml
+[plugins.media]
+jellyfin = { url = "http://192.168.1.21:8096", token = "env:FARO_JELLYFIN", public_url = "https://jellyfin.example.com" }
+plex = { url = "http://192.168.1.22:32400", token = "file:/etc/faro/plex-token" }
+navidrome = { url = "http://192.168.1.23:4533", user = "faro", password = "env:FARO_NAVIDROME" }
+```
+
+Configure any of them. `url` is how faro reaches the server. `public_url`
+(optional) is where a tap on a poster takes you. A Jellyfin API key is created in
+*Dashboard → API Keys*. For Plex, use the `X-Plex-Token` of your account.
+Posters go through faro and stay cached on disk for a week, so the tokens never
+reach the browser. The assistant gets a `now_playing` tool: *"why is the CPU
+busy?"* can be answered with *"Leo is watching a film that's being transcoded"*.
+
 ## What a plugin can do
 
 ```python

@@ -113,6 +113,11 @@ default = 26
 # ------------------------------------------------------------------ plugins
 # [plugins.proxmox]          # power buttons for guests (needs api_token on the host)
 
+# [plugins.media]            # now playing and recently added (configure any of the three)
+# jellyfin = { url = "http://192.168.1.21:8096", token = "env:FARO_JELLYFIN", public_url = "https://jellyfin.example.com" }
+# plex = { url = "http://192.168.1.22:32400", token = "file:/etc/faro/plex-token" }
+# navidrome = { url = "http://192.168.1.23:4533", user = "faro", password = "env:FARO_NAVIDROME" }
+
 # [plugins.ai]               # ask about your homelab; a local model with Ollama (docs/assistant.md)
 # url = "http://192.168.1.30:11434"
 # model = "qwen3:4b-instruct"
