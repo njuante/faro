@@ -214,7 +214,7 @@ body[data-tab="home"] .pane#p-home { padding-top: calc(env(safe-area-inset-top) 
 .ring b { position: absolute; left: 0; top: 0; width: 100%; height: 54px; display: grid; place-items: center; font: 600 13px var(--font-num); }
 .ring span { font-size: 11px; color: var(--on-wall-2); }
 
-.apps { --ic: clamp(54px, 15vw, 68px); display: grid; grid-template-columns: repeat(auto-fill, minmax(calc(var(--ic) + 22px), 1fr)); gap: 18px 6px; justify-items: center; }
+.apps { --ic: clamp(54px, 15vw, 68px); display: grid; grid-template-columns: repeat(auto-fit, minmax(calc(var(--ic) + 22px), 1fr)); gap: 18px 6px; justify-items: center; }
 .app { display: flex; flex-direction: column; align-items: center; gap: 7px; min-width: 0; max-width: 100%; color: var(--on-wall); border: 0; cursor: pointer;
   -webkit-touch-callout: none; user-select: none; -webkit-user-select: none; animation: rise .5s cubic-bezier(.2, .8, .2, 1) both; animation-delay: calc(var(--i) * 25ms); }
 @keyframes rise { from { opacity: 0; transform: translateY(10px) scale(.96); } }
@@ -243,7 +243,7 @@ body[data-tab="home"] .pane#p-home { padding-top: calc(env(safe-area-inset-top) 
   box-shadow: 0 2px 6px rgba(0, 0, 0, .35);
 }
 
-.hostcards { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 12px; }
+.hostcards { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 12px; }
 .hostcard { position: relative; overflow: hidden; text-align: left; color: inherit; border: 0; cursor: pointer; border-radius: var(--radius);
   padding: 13px 16px 14px; display: flex; flex-direction: column; gap: 10px; min-width: 0; }
 .hostcard:active { transform: scale(.985); }

@@ -23,7 +23,8 @@
 @keyframes ai-pulse { 30% { opacity: 1; transform: translateY(-3px); } }
 .ai-cursor::after { content: ''; display: inline-block; width: 7px; height: 14px; margin-left: 2px; vertical-align: -2px; background: currentColor; opacity: .6; animation: ai-blink .9s steps(2) infinite; }
 @keyframes ai-blink { 50% { opacity: 0; } }
-.ai-sug { display: flex; gap: 6px; overflow-x: auto; scrollbar-width: none; }
+.ai-sug { display: flex; gap: 6px; overflow-x: auto; scrollbar-width: none;
+  -webkit-mask-image: linear-gradient(90deg, #000 calc(100% - 36px), transparent); mask-image: linear-gradient(90deg, #000 calc(100% - 36px), transparent); }
 .ai-sug button { flex: none; font: inherit; font-size: 12.5px; color: var(--on-wall); background: var(--soft); border: 1px solid var(--soft-2);
   border-radius: 999px; padding: 6px 11px; cursor: pointer; white-space: nowrap; }
 .ai-form { display: flex; gap: 8px; align-items: center; }

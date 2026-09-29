@@ -37,7 +37,7 @@ export function render(app) {
           || `<div class="use muted">${x.mounts.length ? '' : t('not_mounted')}</div>`}
         <dl>
           <dt>${t('health')}</dt><dd><span class="st ${health[0]}"><i></i>${health[1]}</span></dd>
-          <dt>${t('model')}</dt><dd title="${esc(x.model)} · ${esc(x.serial)}">${esc(x.model || '–')} <span class="muted">· ${esc(tran)} · ${gib(x.size)}</span></dd>
+          <dt>${t('model')}</dt><dd title="${esc(x.model)} · ${esc(x.serial)}">${esc(x.model || '–')} <span class="muted">· ${tran ? esc(tran) + ' · ' : ''}${gib(x.size)}</span></dd>
           <dt>${t('usage')}</dt><dd class="num">${sm.hours != null ? f0(sm.hours) + ' h' + ` <span class="muted">(${f1(sm.hours / 8760)} ${t('years')})</span>` : '–'}${sm.wear != null ? ` · ${t('wear')} ${sm.wear} %` : ''}</dd>
           <dt>${t('now_io')}</dt><dd class="num ink2">↓ ${bytes(io.read)}/s · ↑ ${bytes(io.write)}/s · ${f0(io.busy || 0)} %</dd>
         </dl></div>`);

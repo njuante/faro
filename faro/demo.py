@@ -1,5 +1,6 @@
 """Demo mode: made-up hosts and services, so anyone can try faro (and take screenshots)
 without a single server. `faro demo` uses its own built-in config."""
+import json
 import math
 from collections import deque
 import random
@@ -198,4 +199,10 @@ def start(app):
                                   (26, 'report', 'A quiet day: every service answered and last night\'s backups finished.'),
                                   (3, 'idle_shutdown', 'win11 shut down · Shutting down win11.')):
             auto.log.append({'ts': now - ago_h * 3600, 'rule': rule, 'text': text, 'ok': True})
+    speed = app.plugin('speedtest')
+    if speed and not speed.history():
+        with open(speed.path, 'w') as f:
+            json.dump([{'ts': round(now - ago_h * 3600), 'down': down, 'up': up, 'ping': ping, 'where': where, 'device': ''}
+                       for ago_h, down, up, ping, where in ((52, 88.4, 31.2, 27.0, 'VPN'), (20, 612.5, 488.1, 3.1, 'home'),
+                                                            (2, 594.8, 471.6, 2.8, 'home'))], f)
     threading.Thread(target=loop, daemon=True, name='demo').start()

@@ -19,8 +19,8 @@ def poster(key):
             lines[-1] += ' ' + w
         else:
             lines.append(w)
-    text = ''.join(f'<text x="24" y="{400 + i * 40}" font-family="Georgia,serif" font-size="36" fill="#fff">{escape(ln)}</text>'
-                   for i, ln in enumerate(lines))
+    font = 'font-family="Inter,Helvetica Neue,Arial,sans-serif" font-size="34" font-weight="700" letter-spacing="-.5"'
+    text = ''.join(f'<text x="24" y="{400 + i * 40}" {font} fill="#fff">{escape(ln)}</text>' for i, ln in enumerate(lines))
     svg = (f'<svg xmlns="http://www.w3.org/2000/svg" width="342" height="513" viewBox="0 0 342 513">'
            f'<defs><linearGradient id="g" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="{a}"/>'
            f'<stop offset="1" stop-color="{b}"/></linearGradient></defs><rect width="342" height="513" fill="url(#g)"/>'
