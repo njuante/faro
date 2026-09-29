@@ -1,30 +1,61 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <title>faro</title>
   <defs>
-    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#2d4fc0"/>
-      <stop offset=".55" stop-color="#3a2a8f"/>
-      <stop offset="1" stop-color="#0e5f73"/>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#1c2b73"/>
+      <stop offset=".6" stop-color="#3b3aa6"/>
+      <stop offset="1" stop-color="#6b4bc4"/>
     </linearGradient>
-    <linearGradient id="beam" x1="0" y1="0" x2="1" y2="0">
-      <stop offset="0" stop-color="#ffe7a3" stop-opacity=".95"/>
-      <stop offset="1" stop-color="#ffe7a3" stop-opacity="0"/>
+    <radialGradient id="glow" cx="256" cy="176" r="150" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#ffd978" stop-opacity=".75"/>
+      <stop offset="1" stop-color="#ffd978" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="beamR" x1="256" y1="0" x2="512" y2="0" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#ffe6a6" stop-opacity=".9"/>
+      <stop offset="1" stop-color="#ffe6a6" stop-opacity="0"/>
     </linearGradient>
-    <linearGradient id="beam2" x1="1" y1="0" x2="0" y2="0">
-      <stop offset="0" stop-color="#ffe7a3" stop-opacity=".95"/>
-      <stop offset="1" stop-color="#ffe7a3" stop-opacity="0"/>
+    <linearGradient id="beamL" x1="256" y1="0" x2="0" y2="0" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#ffe6a6" stop-opacity=".55"/>
+      <stop offset="1" stop-color="#ffe6a6" stop-opacity="0"/>
     </linearGradient>
+    <linearGradient id="sea" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#1f8fa3"/>
+      <stop offset="1" stop-color="#0c4f63"/>
+    </linearGradient>
+    <clipPath id="c"><rect width="512" height="512" rx="114"/></clipPath>
   </defs>
-  <rect width="512" height="512" rx="116" fill="url(#bg)"/>
-  <!-- beams -->
-  <path d="M268 158 L470 96 L470 236 Z" fill="url(#beam)" opacity=".85"/>
-  <path d="M244 158 L42 96 L42 236 Z" fill="url(#beam2)" opacity=".55"/>
-  <!-- lamp room -->
-  <rect x="222" y="132" width="68" height="52" rx="10" fill="#ffe7a3"/>
-  <path d="M206 132 L256 96 L306 132 Z" fill="#fff"/>
-  <rect x="200" y="182" width="112" height="16" rx="6" fill="#fff"/>
-  <!-- tower with stripes -->
-  <path d="M214 198 H298 L322 420 H190 Z" fill="#fff"/>
-  <path d="M209 246 H303 L308 292 H204 Z" fill="#e5484d"/>
-  <path d="M199 338 H313 L318 384 H194 Z" fill="#e5484d"/>
-  <rect x="160" y="416" width="192" height="22" rx="11" fill="#fff" opacity=".9"/>
+  <g clip-path="url(#c)">
+    <rect width="512" height="512" fill="url(#sky)"/>
+    <!-- stars -->
+    <g fill="#fff">
+      <circle cx="96" cy="84" r="4" opacity=".8"/>
+      <circle cx="150" cy="130" r="2.5" opacity=".55"/>
+      <circle cx="404" cy="72" r="3" opacity=".7"/>
+      <circle cx="440" cy="300" r="2.5" opacity=".45"/>
+      <circle cx="70" cy="290" r="3" opacity=".5"/>
+    </g>
+    <g transform="translate(256 424) scale(1.16) translate(-256 -424)">
+    <!-- light -->
+    <circle cx="256" cy="176" r="150" fill="url(#glow)"/>
+    <path d="M256 158 L540 96 L540 262 L256 194 Z" fill="url(#beamR)"/>
+    <path d="M256 158 L-28 110 L-28 244 L256 194 Z" fill="url(#beamL)"/>
+    <!-- tower -->
+    <path d="M220 214 H292 L318 408 H194 Z" fill="#fff"/>
+    <path d="M211 272 H301 L306 312 H206 Z" fill="#e5484d"/>
+    <path d="M203 346 H309 L314 386 H198 Z" fill="#e5484d"/>
+    <path d="M256 214 H292 L318 408 H256 Z" fill="#1c2b73" opacity=".12"/>
+    <rect x="248" y="232" width="16" height="26" rx="8" fill="#26306b"/>
+    <!-- gallery, lantern and dome -->
+    <rect x="202" y="200" width="108" height="16" rx="6" fill="#fff"/>
+    <rect x="224" y="154" width="64" height="48" rx="6" fill="#ffe08a"/>
+    <path d="M245 156 V200 M267 156 V200" stroke="#b8862b" stroke-width="4" opacity=".55"/>
+    <path d="M212 158 Q214 116 256 108 Q298 116 300 158 Z" fill="#e5484d"/>
+    <circle cx="256" cy="100" r="9" fill="#e5484d"/>
+    </g>
+    <!-- rock and sea -->
+    <path d="M150 420 Q170 396 204 398 H308 Q342 396 362 420 Z" fill="#232a5c"/>
+    <path d="M0 422 Q64 400 128 422 T256 422 T384 422 T512 422 V512 H0 Z" fill="url(#sea)"/>
+    <path d="M0 458 Q64 440 128 458 T256 458 T384 458 T512 458 V512 H0 Z" fill="#0a3f52" opacity=".7"/>
+    <path d="M40 432 Q80 420 120 432 M300 436 Q340 424 380 436" stroke="#fff" stroke-width="5" stroke-linecap="round" fill="none" opacity=".35"/>
+  </g>
 </svg>

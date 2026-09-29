@@ -1,5 +1,4 @@
-<p align="center"><img src="web/img/icon.svg" width="88" alt=""></p>
-<h1 align="center">faro</h1>
+<h1 align="center"><img src="docs/logo.svg" width="300" alt="faro."></h1>
 <p align="center">Un panel autoalojado para los servidores de tu homelab.<br>
 <b>Sin dependencias. Sin puertos abiertos en tus máquinas. Un solo fichero de configuración.</b><br>
 <a href="README.md">English</a></p>

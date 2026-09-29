@@ -1,8 +1,6 @@
-<p align="center">
-  <img src="web/img/icon.svg" width="88" alt="">
-</p>
-
-<h1 align="center">faro</h1>
+<h1 align="center">
+  <img src="docs/logo.svg" width="300" alt="faro.">
+</h1>
 
 <p align="center">
   A self-hosted dashboard for your homelab servers.<br>
