@@ -191,7 +191,21 @@ main { position: relative; }
 /* ------------------------------------------------------------------ home */
 body[data-tab="home"] .pane#p-home { padding-top: calc(env(safe-area-inset-top) + 16px); }
 .home { display: flex; flex-direction: column; align-items: center; gap: 18px; }
-.home > * { width: min(100%, 880px); }
+.home-l, .home-r { display: contents; }
+.home-l > *, .home-r > * { width: min(100%, 880px); }
+/* landscape screens: launcher on the left, cards on the right, the whole screen and nothing more */
+@media (min-width: 1180px) and (min-aspect-ratio: 4/3) {
+  body[data-tab="home"] .pane#p-home { height: 100vh; height: 100dvh; padding-bottom: calc(var(--dock-h) + env(safe-area-inset-bottom) + 26px); }
+  .home { flex: 1; min-height: 0; display: grid; grid-template-columns: minmax(0, 1.45fr) minmax(400px, 1fr); grid-template-rows: minmax(0, 1fr); align-items: stretch; gap: 24px;
+    width: 100%; max-width: 1560px; margin: 0 auto; }
+  .home-l, .home-r { display: flex; flex-direction: column; gap: 20px; min-height: 0; overflow-y: auto; scrollbar-width: none; padding: 4px 2px 2px; }
+  .home-l::-webkit-scrollbar, .home-r::-webkit-scrollbar { display: none; }
+  .home-l > *, .home-r > * { width: 100%; }
+  .home-r { padding-bottom: 28px; -webkit-mask-image: linear-gradient(to bottom, #000 calc(100% - 28px), transparent);
+    mask-image: linear-gradient(to bottom, #000 calc(100% - 28px), transparent); }
+  .home-r .cards { grid-template-columns: minmax(0, 1fr); }
+  .home .apps { --ic: 72px; grid-template-columns: repeat(auto-fit, minmax(calc(var(--ic) + 18px), 1fr)); row-gap: 30px; padding: 6px 0; }
+}
 .widget { position: relative; display: grid; gap: 14px 22px; padding: 18px 20px; border-radius: 26px; }
 @media (min-width: 600px) { .widget { grid-template-columns: 1fr auto; align-items: center; padding: 20px 26px; } }
 .w-time { font: 400 60px/1 var(--font-title); letter-spacing: -0.02em; }
@@ -214,7 +228,7 @@ body[data-tab="home"] .pane#p-home { padding-top: calc(env(safe-area-inset-top) 
 .ring b { position: absolute; left: 0; top: 0; width: 100%; height: 54px; display: grid; place-items: center; font: 600 13px var(--font-num); }
 .ring span { font-size: 11px; color: var(--on-wall-2); }
 
-.apps { --ic: clamp(54px, 15vw, 68px); display: grid; grid-template-columns: repeat(auto-fit, minmax(calc(var(--ic) + 22px), 1fr)); gap: 18px 6px; justify-items: center; }
+.apps { --ic: clamp(52px, 14vw, 68px); display: grid; grid-template-columns: repeat(auto-fit, minmax(calc(var(--ic) + 12px), 1fr)); gap: 18px 4px; justify-items: center; }
 .app { display: flex; flex-direction: column; align-items: center; gap: 7px; min-width: 0; max-width: 100%; color: var(--on-wall); border: 0; cursor: pointer;
   -webkit-touch-callout: none; user-select: none; -webkit-user-select: none; animation: rise .5s cubic-bezier(.2, .8, .2, 1) both; animation-delay: calc(var(--i) * 25ms); }
 @keyframes rise { from { opacity: 0; transform: translateY(10px) scale(.96); } }

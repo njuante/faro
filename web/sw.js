@@ -1,5 +1,5 @@
 // Offline shell: the interface loads without the network; data (/api/) is never cached.
-const CACHE = 'faro-v2';
+const CACHE = 'faro-v3';
 const SHELL = ['/', '/css/faro.css', '/js/main.js', '/js/i18n.js', '/js/fmt.js', '/js/chart.js', '/js/icons.js',
   '/js/views/home.js', '/js/views/system.js', '/js/views/services.js', '/js/views/disks.js', '/js/views/sheet.js',
   '/img/icon.svg'];
