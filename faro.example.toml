@@ -42,6 +42,7 @@ address = "192.168.1.10"
 #   host + guest link the service to a Proxmox guest (CPU, RAM and disk in the list)
 #   icon: play, musica, nube, carpeta, llave, escudo, grafica, base, capas, servidor,
 #         candado, casa, sync, descarga, chip, disco... or an image URL / path under web/img/
+#         or the logo of the app by its name in https://dashboard-icons.dev: "jellyfin.svg", "adguard-home.png"
 
 # >>> services
 [[services]]

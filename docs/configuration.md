@@ -63,7 +63,7 @@ Any string value can be a reference instead of the secret itself:
 | `url` | `""` | what the icon opens |
 | `check` | `"http"` if there is a url, else `"none"` | `http`, `tcp`, `dns` or `none` |
 | `target` | the url | what to check: `"http://10.0.0.5:8096/health"`, `"10.0.0.5:22"` (tcp), `"10.0.0.53"` (dns) |
-| `icon` | first letter | a built-in name (`play`, `nube`, `llave`, `escudo`, `grafica`, `casa`, `servidor`…) or an image URL |
+| `icon` | first letter | the app's logo by its [dashboard-icons](https://dashboard-icons.dev) name (`"jellyfin.svg"`, `"adguard-home.png"`), a built-in glyph (`play`, `nube`, `llave`, `escudo`, `grafica`, `casa`, `servidor`…) or an image URL |
 | `color` | derived from the name | `"#aa5cc3"` |
 | `host`, `guest` | | link the service to a Proxmox guest: its CPU, RAM and disk show in the list |
 | `description`, `group` | `""` | |

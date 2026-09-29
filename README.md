@@ -96,7 +96,7 @@ title = "Homelab"
 [[services]]
 name = "Jellyfin"
 url = "https://jellyfin.example.com"
-icon = "play"
+icon = "jellyfin.svg"       # its logo, from dashboard-icons.dev
 host = "nas"
 guest = 101                 # Proxmox CT: its CPU and RAM show next to the service
 

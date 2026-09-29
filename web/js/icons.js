@@ -52,9 +52,15 @@ function autoColor(name) {
 }
 
 const isImage = v => /^(https?:)?\/|\.(png|svg|webp|jpe?g|ico)$/i.test(v || '');
+// a bare file name ("jellyfin.svg") comes from the dashboard-icons catalogue, as in Homepage
+const CATALOGUE = 'https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons';
+const imageUrl = v => {
+  const m = /^([a-z0-9][a-z0-9-]*)\.(svg|png|webp)$/i.exec(v);
+  return m ? `${CATALOGUE}/${m[2].toLowerCase()}/${m[1].toLowerCase()}.${m[2].toLowerCase()}` : v;
+};
 
 export function appIcon(svc) {
-  if (isImage(svc.icon)) return `<span class="ico img"><img src="${esc(svc.icon)}" alt="" draggable="false" loading="lazy"></span>`;
+  if (isImage(svc.icon)) return `<span class="ico img"><img src="${esc(imageUrl(svc.icon))}" alt="" draggable="false" loading="lazy"></span>`;
   const c = svc.color || autoColor(svc.name);
   const glyph = ICONS[svc.icon] ? icon(svc.icon)
     : `<b class="initial">${esc((svc.name || '?').trim().charAt(0).toUpperCase())}</b>`;
