@@ -202,7 +202,7 @@ class Plugin(BasePlugin):
     def send_report(self):
         text = None
         ai = self.app.plugin('ai')
-        if ai and ai.url:
+        if ai and ai.url and not ai.demo:
             try:
                 slow, live = ai.state_text()
                 msgs = [{'role': 'system', 'content': ai.system_prompt()},

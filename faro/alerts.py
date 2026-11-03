@@ -16,9 +16,9 @@ LOG_SIZE = 300
 
 
 class Notifier:
-    def __init__(self, conf):
+    def __init__(self, conf, demo=False):
         self.conf = conf
-        nt = conf['notify']
+        nt = {} if demo else conf['notify']
         self.ntfy = nt.get('ntfy')
         self.webhook = nt.get('webhook')
 
@@ -27,6 +27,8 @@ class Notifier:
         return bool(self.ntfy or self.webhook)
 
     def send(self, alert):
+        if not self.enabled:
+            return
         for fn in (self._ntfy, self._webhook):
             threading.Thread(target=self._safe, args=(fn, alert), daemon=True).start()
 
@@ -68,11 +70,11 @@ class Notifier:
 
 
 class Alerts:
-    def __init__(self, conf, hosts, checks):
+    def __init__(self, conf, hosts, checks, demo=False):
         self.conf = conf
         self.hosts = hosts
         self.checks = checks
-        self.notifier = Notifier(conf)
+        self.notifier = Notifier(conf, demo=demo)
         self.T = strings(conf['language'] if conf['language'] != 'auto' else 'en')
         self.lang = conf['language'] if conf['language'] in ('en', 'es') else 'en'
         self.watch = {}                               # key -> {'since', 'fired'}
