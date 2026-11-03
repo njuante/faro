@@ -50,7 +50,7 @@ class Plugin(BasePlugin):
             if srv:
                 srv['url'] = srv['url'].rstrip('/')
                 srv['public_url'] = (srv.get('public_url') or '').rstrip('/')
-        self.demo = bool(options.get('demo'))
+        self.demo = app.demo or bool(options.get('demo'))
         self.img_dir = os.path.join(app.conf['server']['data_dir'], 'img')
         self.lock = threading.Lock()
         self.state = {'playing': [], 'recent': [], 'errors': {}, 'ts': 0}

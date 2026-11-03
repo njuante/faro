@@ -115,7 +115,7 @@ def make_handler(app):
             if path == '/api/me':
                 return self.api(200, {'auth': auth.required, 'logged_in': auth.valid(self.token()),
                                       'title': app.conf['title'], 'language': app.conf['language'],
-                                      'version': app.version})
+                                      'version': app.version, 'demo': app.demo})
             if path == '/api/state':
                 return self.api(200, app.snapshot(True))
             if path == '/api/stream':

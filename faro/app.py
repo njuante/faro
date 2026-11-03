@@ -21,7 +21,7 @@ class Faro:
         os.makedirs(conf['server']['data_dir'], exist_ok=True)
         self.hosts = Hosts(conf)
         self.checks = Checks(conf)
-        self.alerts = Alerts(conf, self.hosts, self.checks)
+        self.alerts = Alerts(conf, self.hosts, self.checks, demo=demo)
         self.plugins = plugins.load(self)
         self.actions = {a.id: a for p in self.plugins for a in p.actions()}
         self.routes = {k: v for p in self.plugins for k, v in p.routes().items()}

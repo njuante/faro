@@ -29,7 +29,7 @@ servicios) y lo he convertido en algo que cualquiera puede desplegar.
 - **Pensado para el móvil:** se instala como app (PWA), en tema claro u oscuro, y el
   fondo cambia con la hora del día.
 
-## Pruébalo en 10 segundos
+## Pruébalo en 10 segundos · [Demo en vivo](https://faro-demo-e37014c5aace.herokuapp.com/)
 
 ```sh
 git clone https://github.com/njuante/faro && cd faro

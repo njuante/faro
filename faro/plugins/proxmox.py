@@ -41,7 +41,7 @@ class Plugin(BasePlugin):
         if not options.get('verify_tls', False):       # Proxmox ships a self-signed certificate
             self.ctx.check_hostname = False
             self.ctx.verify_mode = ssl.CERT_NONE
-        self.hosts = {h['id']: h for h in app.conf['hosts'] if h.get('api_token')}
+        self.hosts = {} if app.demo else {h['id']: h for h in app.conf['hosts'] if h.get('api_token')}
 
     def _api(self, host, path, method='GET', data=None):
         req = urllib.request.Request(host['api_url'] + '/api2/json' + path, method=method,

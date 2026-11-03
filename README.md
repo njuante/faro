@@ -59,7 +59,7 @@ and grew into something anyone can deploy.
 - **Built for a phone.** It installs as an app (PWA), works in light and dark
   mode, and follows the time of day.
 
-## Try it in 10 seconds
+## Try it in 10 seconds · [Live demo](https://faro-demo-e37014c5aace.herokuapp.com/)
 
 ```sh
 git clone https://github.com/njuante/faro && cd faro

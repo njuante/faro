@@ -141,7 +141,7 @@ class Plugin(BasePlugin):
         self.ctx_size = int(options.get('context', 6144))
         self.threads = options.get('threads')
         self.log_path = os.path.join(app.conf['server']['data_dir'], 'ai.jsonl') if options.get('log') else None
-        self.demo = bool(options.get('demo'))
+        self.demo = app.demo or bool(options.get('demo'))
         self.turn = threading.Semaphore(1)           # a small model on a CPU: one question at a time
         self.samples = {}                            # host -> deque of (ts, cpu %, {vmid: cores})
         self.warm_at = 0
@@ -321,6 +321,8 @@ class Plugin(BasePlugin):
     # ------------------------------------------------------------------ talking to Ollama
 
     def ollama(self, path, body=None, timeout=180):
+        if self.demo:
+            raise RuntimeError('external models are disabled in demo mode')
         data = json.dumps(body).encode() if body is not None else None
         req = urllib.request.Request(self.url + path, data=data, headers={'Content-Type': 'application/json'})
         return urllib.request.urlopen(req, timeout=timeout)
@@ -350,7 +352,7 @@ class Plugin(BasePlugin):
 
     def warm_up(self):
         """Loads the model and caches the fixed prompt in the background, so the first question is quick."""
-        if time.time() - self.warm_at < 600 or not self.turn.acquire(blocking=False):
+        if self.demo or time.time() - self.warm_at < 600 or not self.turn.acquire(blocking=False):
             return
         self.warm_at = time.time()
 
@@ -451,6 +453,8 @@ class Plugin(BasePlugin):
 
     def r_sleep(self, req):
         """Unloads the model to give its RAM back (it loads again on the next question)."""
+        if self.demo:
+            return 200, {'ok': True}
         try:
             with self.ollama('/api/generate', {'model': self.model, 'keep_alive': 0, 'prompt': ''}, timeout=30) as r:
                 r.read()

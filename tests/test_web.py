@@ -50,7 +50,7 @@ class WebTest(unittest.TestCase):
         r, data = self.req('GET', '/api/me')
         self.assertEqual(r.status, 200)
         self.assertEqual(json.loads(data), {'auth': True, 'logged_in': False, 'title': 'faro',
-                                            'language': 'auto', 'version': self.app.version})
+                                            'language': 'auto', 'version': self.app.version, 'demo': False})
 
     def test_api_needs_login(self):
         for path in ('/api/state', '/api/alerts', '/api/stream'):
