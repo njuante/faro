@@ -3,6 +3,9 @@
 #
 #   curl -fsSL https://raw.githubusercontent.com/njuante/faro/main/deploy/install.sh | sudo sh
 #
+# It installs the latest release. Pick another one with FARO_VERSION
+# (FARO_VERSION=v0.1.0), or the development branch with FARO_VERSION=main.
+#
 # Or from a checkout:  sudo ./deploy/install.sh
 #
 # What it does: creates a `faro` system user, copies the code to /opt/faro,
@@ -11,7 +14,8 @@
 set -eu
 
 REPO="${FARO_REPO:-njuante/faro}"
-BRANCH="${FARO_BRANCH:-main}"
+# FARO_BRANCH is the old name of FARO_VERSION and still works.
+VERSION="${FARO_VERSION:-${FARO_BRANCH:-}}"
 PREFIX=/opt/faro
 CONF_DIR=/etc/faro
 DATA_DIR=/var/lib/faro
@@ -31,8 +35,18 @@ if [ -n "$here" ] && [ -f "$here/faro/__init__.py" ]; then
 else
   tmp=$(mktemp -d)
   trap 'rm -rf "$tmp"' EXIT
-  say "Downloading faro ($REPO@$BRANCH)…"
-  curl -fsSL "https://github.com/$REPO/archive/refs/heads/$BRANCH.tar.gz" | tar -xz -C "$tmp" --strip-components=1
+  if [ -z "$VERSION" ]; then
+    # The latest release; main only while there is none yet.
+    VERSION=$(curl -fsSL "https://api.github.com/repos/$REPO/releases/latest" 2>/dev/null \
+      | sed -n 's/^ *"tag_name": *"\([^"]*\)".*/\1/p' | head -1)
+    VERSION="${VERSION:-main}"
+  fi
+  case "$VERSION" in
+    v[0-9]*) url="https://github.com/$REPO/archive/refs/tags/$VERSION.tar.gz" ;;
+    *)       url="https://github.com/$REPO/archive/refs/heads/$VERSION.tar.gz" ;;
+  esac
+  say "Downloading faro ($REPO@$VERSION)…"
+  curl -fsSL "$url" | tar -xz -C "$tmp" --strip-components=1
   src="$tmp"
 fi
 

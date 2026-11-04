@@ -43,9 +43,12 @@ curl -fsSL https://raw.githubusercontent.com/njuante/faro/main/deploy/install.sh
 faro add-host root@192.168.1.20 --name nas
 ```
 
+Instala la última versión publicada; `FARO_VERSION=v0.1.0` elige una concreta.
+Repetir el mismo comando actualiza faro y conserva la configuración.
+
 La configuración está en `/etc/faro/faro.toml` (con todas las opciones comentadas
 en [`faro.example.toml`](faro.example.toml)). Hay más documentación, en inglés, en
-[docs/](docs/).
+[docs/](docs/), y los cambios de cada versión en [CHANGELOG.md](CHANGELOG.md).
 
 ## Licencia
 
