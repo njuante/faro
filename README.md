@@ -85,7 +85,12 @@ faro add-host root@192.168.1.20 --name nas
 faro add-host root@192.168.1.30 --name pi --description "Raspberry Pi · Docker"
 ```
 
+It installs the latest release; `FARO_VERSION=v0.1.0` picks a specific one.
+Running the same command again updates faro and keeps your config.
+
 Docker works too. See [`compose.yml`](compose.yml).
+
+Changes between versions are in [CHANGELOG.md](CHANGELOG.md).
 
 ## Configure
 
@@ -173,7 +178,7 @@ More detail: [docs/architecture.md](docs/architecture.md).
 ## Development
 
 ```sh
-python3 -m unittest discover -s tests -t .     # 39 tests, no pip install
+python3 -m unittest discover -s tests -t .     # no pip install needed
 python3 -m faro demo --language es
 ```
 
@@ -185,6 +190,11 @@ agent on 3.8–3.10 and a Docker build with a smoke test.
 - [ ] Edit services from the UI (it writes `faro.toml` for you)
 - [ ] Push mode for hosts behind NAT (the agent connects out over HTTPS)
 - [ ] Prometheus `/metrics` endpoint
+
+## Contributing and security
+
+Bug reports and pull requests are welcome: see [CONTRIBUTING.md](CONTRIBUTING.md).
+Security issues go privately, as described in [SECURITY.md](SECURITY.md).
 
 ## License
 
